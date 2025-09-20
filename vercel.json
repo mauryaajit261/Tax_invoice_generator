@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/Aradhya_Enterprise_invoice.html" }
+  ]
+}
