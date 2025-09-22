@@ -39,7 +39,7 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
         }
         
         header {
@@ -68,7 +68,7 @@
         
         .app-container {
             display: flex;
-            gap: 25px;
+            gap: 30px;
             flex-wrap: wrap;
         }
         
@@ -86,7 +86,7 @@
             flex: 2;
             min-width: 600px;
             background: white;
-            padding: 25px;
+            padding: 30px;
             border-radius: 12px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             overflow: auto;
@@ -311,6 +311,18 @@
             margin-top: 40px;
         }
         
+        /* New styles for horizontal layout in preview */
+        .preview-two-columns {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .preview-column {
+            flex: 1;
+        }
+        
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -328,6 +340,18 @@
         }
         
         @media print {
+            @page {
+                size: A4;
+                margin: 0.5in;
+                /* Remove URL from footer */
+                @bottom-left { content: "" !important; }
+                @bottom-center { content: "" !important; }
+                @bottom-right { content: "" !important; }
+                @top-left { content: "" !important; }
+                @top-center { content: "" !important; }
+                @top-right { content: "" !important; }
+            }
+            
             body * {
                 visibility: hidden;
             }
@@ -341,9 +365,146 @@
                 width: 100%;
                 box-shadow: none;
                 padding: 0;
+                font-size: 11px !important;
+                line-height: 1.2 !important;
             }
-            header, .input-form, .download-btn {
-                display: none;
+            
+            /* Hide specific unwanted texts */
+            header, 
+            .input-form, 
+            .download-btn, 
+            .invoice-preview > .section-title,
+            .invoice-preview > h2 {
+                display: none !important;
+                visibility: hidden !important;
+            }
+            
+            /* Remove any title containing "Professional Tax Invoice Generator" */
+            h1:contains("Professional Tax Invoice Generator"),
+            h2:contains("Invoice Preview") {
+                display: none !important;
+                visibility: hidden !important;
+            }
+            
+            /* Optimize spacing for single page */
+            .invoice-header {
+                margin-bottom: 8px !important;
+                padding-bottom: 5px !important;
+            }
+            
+            .invoice-title {
+                font-size: 18px !important;
+                margin-bottom: 2px !important;
+            }
+            
+            .company-info {
+                margin-bottom: 10px !important;
+                font-size: 10px !important;
+                line-height: 1.1 !important;
+            }
+            
+            .invoice-section {
+                margin-bottom: 8px !important;
+            }
+            
+            .section-title {
+                font-size: 12px !important;
+                margin: 5px 0 3px !important;
+                padding-bottom: 2px !important;
+            }
+            
+            /* Ensure parallel layout in PDF with reduced spacing */
+            .preview-two-columns {
+                display: flex !important;
+                justify-content: space-between !important;
+                gap: 15px !important;
+                margin-bottom: 8px !important;
+                page-break-inside: avoid;
+            }
+            
+            .preview-column {
+                flex: 1 !important;
+            }
+            
+            .two-columns {
+                display: flex !important;
+                justify-content: space-between !important;
+                gap: 15px !important;
+                page-break-inside: avoid;
+                margin-bottom: 8px !important;
+            }
+            
+            .column {
+                flex: 1 !important;
+            }
+            
+            /* Optimize table spacing */
+            .invoice-table {
+                margin: 5px 0 !important;
+                font-size: 9px !important;
+            }
+            
+            .invoice-table th, .invoice-table td {
+                padding: 3px 4px !important;
+                font-size: 9px !important;
+            }
+            
+            .invoice-table th {
+                font-size: 9px !important;
+                font-weight: bold !important;
+            }
+            
+            .summary-table {
+                font-size: 9px !important;
+            }
+            
+            .summary-table td {
+                padding: 2px 3px !important;
+            }
+            
+            .label {
+                font-size: 9px !important;
+            }
+            
+            /* Reduce bank details spacing */
+            .bank-details {
+                margin-top: 5px !important;
+                padding: 5px !important;
+                font-size: 9px !important;
+            }
+            
+            /* Optimize signature section */
+            .signature {
+                margin-top: 15px !important;
+                font-size: 9px !important;
+            }
+            
+            /* Compact footer */
+            .invoice-footer {
+                margin-top: 10px !important;
+                padding-top: 5px !important;
+                font-size: 8px !important;
+                line-height: 1.1 !important;
+            }
+            
+            /* Reduce spacing in amount words section */
+            .invoice-section div {
+                margin-top: 3px !important;
+            }
+            
+            /* Ensure no page breaks */
+            .invoice-container {
+                page-break-inside: avoid !important;
+            }
+            
+            /* Compact tax breakdown */
+            #preview-tax {
+                font-size: 9px !important;
+            }
+            
+            /* Reduce gaps in product table */
+            #preview-products tbody tr {
+                line-height: 1.1 !important;
             }
         }
         
@@ -356,7 +517,7 @@
                 min-width: 100%;
             }
             
-            .two-columns {
+            .two-columns, .preview-two-columns {
                 flex-direction: column;
             }
             
@@ -394,22 +555,62 @@
                 
                 <div class="form-group">
                     <label for="deliveryNote"><i class="fas fa-truck-loading"></i> Delivery Note</label>
-                    <input type="text" id="deliveryNote" value="004">
+                    <input type="text" id="deliveryNote" value="AE/005/25-26">
                 </div>
                 
                 <div class="form-group">
                     <label for="paymentTerms"><i class="fas fa-money-bill-wave"></i> Mode/Terms of Payment</label>
-                    <input type="text" id="paymentTerms" value="100% Advance">
+                    <input type="text" id="paymentTerms" value="ADVANCE">
+                </div>
+                
+                <div class="form-group">
+                    <label for="referenceNoDate"><i class="fas fa-file-alt"></i> Reference No. & Date</label>
+                    <input type="text" id="referenceNoDate" value="SI/101/2025-26">
+                </div>
+                
+                <div class="form-group">
+                    <label for="otherReferences"><i class="fas fa-bookmark"></i> Other References</label>
+                    <input type="text" id="otherReferences" value="" placeholder="(Optional)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="buyerOrderNo"><i class="fas fa-shopping-cart"></i> Buyer's Order No.</label>
+                    <input type="text" id="buyerOrderNo" value="SI/101/2025-26">
+                </div>
+                
+                <div class="form-group">
+                    <label for="buyerOrderDate"><i class="fas fa-calendar-day"></i> Buyer's Order Date</label>
+                    <input type="date" id="buyerOrderDate" value="2025-09-21">
+                </div>
+                
+                <div class="form-group">
+                    <label for="dispatchDocNo"><i class="fas fa-file-export"></i> Dispatch Doc No.</label>
+                    <input type="text" id="dispatchDocNo" value="005">
                 </div>
                 
                 <div class="form-group">
                     <label for="deliveryNoteDate"><i class="fas fa-calendar-check"></i> Delivery Note Date</label>
-                    <input type="date" id="deliveryNoteDate" value="2025-09-21">
+                    <input type="date" id="deliveryNoteDate" value="" placeholder="(Optional)">
                 </div>
                 
                 <div class="form-group">
                     <label for="dispatchedThrough"><i class="fas fa-shipping-fast"></i> Dispatched Through</label>
                     <input type="text" id="dispatchedThrough" value="DAMAN">
+                </div>
+                
+                <div class="form-group">
+                    <label for="destination"><i class="fas fa-map-marker-alt"></i> Destination</label>
+                    <input type="text" id="destination" value="SILVASSA">
+                </div>
+                
+                <div class="form-group">
+                    <label for="billOfLading"><i class="fas fa-ship"></i> Bill of Lading/LR-RR No.</label>
+                    <input type="text" id="billOfLading" value="" placeholder="(Optional)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="motorVehicleNo"><i class="fas fa-truck"></i> Motor Vehicle No.</label>
+                    <input type="text" id="motorVehicleNo" value="" placeholder="(Optional)">
                 </div>
                 
                 <div class="section-title"><i class="fas fa-building"></i> Consignee Details</div>
@@ -473,45 +674,76 @@
                         E-MAIL: aradhyaenterprise17@gmail.com
                     </div>
                     
-                    <div class="invoice-section">
-                        <div class="two-columns">
-                            <div class="column">
-                                <div class="section-title">Consignee (Ship to)</div>
-                                <strong id="preview-consignee-name">Western Refrigerator Pvt. Ltd.</strong><br>
-                                <span id="preview-consignee-address">New Survey No. 726,732,747,748,752,635 Tadgam<br>Umbergaon, Dist. Valsad<br>Gujarat - 396135</span><br>
-                                GSTIN/UIN: <span id="preview-consignee-gst">24AAACW0012H1Z0</span><br>
-                                State Name: <span id="preview-consignee-state">Gujarat, Code: 24</span>
-                            </div>
-                            
-                            <div class="column">
-                                <div class="section-title">Invoice Details</div>
-                                <table class="summary-table">
-                                    <tr>
-                                        <td class="label">Invoice No:</td>
-                                        <td id="preview-invoice-number">AE/004/25-26</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label">Dated:</td>
-                                        <td id="preview-invoice-date">21-Sep-25</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label">Delivery Note:</td>
-                                        <td id="preview-delivery-note">004</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label">Mode/Terms of Payment:</td>
-                                        <td id="preview-payment-terms">100% Advance</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label">Delivery Note Date:</td>
-                                        <td id="preview-delivery-note-date">21-Sep-25</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label">Dispatched through:</td>
-                                        <td id="preview-dispatched-through">DAMAN</td>
-                                    </tr>
-                                </table>
-                            </div>
+                    <!-- Updated section with horizontal layout -->
+                    <div class="preview-two-columns">
+                        <div class="preview-column">
+                            <div class="section-title">Consignee (Ship to)</div>
+                            <strong id="preview-consignee-name">Western Refrigerator Pvt. Ltd.</strong><br>
+                            <span id="preview-consignee-address">New Survey No. 726,732,747,748,752,635 Tadgam<br>Umbergaon, Dist. Valsad<br>Gujarat - 396135</span><br>
+                            GSTIN/UIN: <span id="preview-consignee-gst">24AAACW0012H1Z0</span><br>
+                            State Name: <span id="preview-consignee-state">Gujarat, Code: 24</span>
+                        </div>
+                        
+                        <div class="preview-column">
+                            <div class="section-title">Invoice Details</div>
+                            <table class="summary-table">
+                                <tr>
+                                    <td class="label">Invoice No:</td>
+                                    <td id="preview-invoice-number">AE/004/25-26</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Dated:</td>
+                                    <td id="preview-invoice-date">21-Sep-25</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Delivery Note:</td>
+                                    <td id="preview-delivery-note">AE/005/25-26</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Mode/Terms of Payment:</td>
+                                    <td id="preview-payment-terms">ADVANCE</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Reference No. & Date:</td>
+                                    <td id="preview-reference-no-date">SI/101/2025-26</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Other References:</td>
+                                    <td id="preview-other-references">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Buyer's Order No:</td>
+                                    <td id="preview-buyer-order-no">SI/101/2025-26</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Buyer's Order Date:</td>
+                                    <td id="preview-buyer-order-date">21-Sep-25</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Dispatch Doc No:</td>
+                                    <td id="preview-dispatch-doc-no">005</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Delivery Note Date:</td>
+                                    <td id="preview-delivery-note-date">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Dispatched through:</td>
+                                    <td id="preview-dispatched-through">DAMAN</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Destination:</td>
+                                    <td id="preview-destination">SILVASSA</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Bill of Lading/LR-RR No:</td>
+                                    <td id="preview-bill-of-lading">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Motor Vehicle No:</td>
+                                    <td id="preview-motor-vehicle-no">-</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                     
@@ -596,7 +828,6 @@
                         <div style="margin-top: 5px;">
                             <strong>Tax Amount (in words):</strong> <span id="preview-tax-words">INR Three Thousand Six Hundred Only</span>
                         </div>
-                    </div>
                     
                     <div class="two-columns">
                         <div class="column bank-details">
@@ -649,7 +880,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Format date for display
             function formatDate(dateString) {
+                if (!dateString) return '-';
                 const date = new Date(dateString);
+                if (isNaN(date.getTime())) return '-';
                 const day = date.getDate().toString().padStart(2, '0');
                 const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                 const month = monthNames[date.getMonth()];
@@ -664,75 +897,85 @@
             
             // Convert number to words with paisa support
             function numberToWords(number) {
-                // Split into rupees and paisa
-                const rupees = Math.floor(number);
-                const paisa = Math.round((number - rupees) * 100);
-                
-                const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 
-                             'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 
-                             'Eighteen', 'Nineteen'];
-                const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-                
-                let words = '';
-                
-                // Convert rupees
-                if (rupees === 0 && paisa === 0) return 'Zero Rupees Only';
-                if (rupees > 0) {
-                    if (rupees >= 10000000) {
-                        words += numberToWords(Math.floor(rupees / 10000000)) + ' Crore ';
-                        rupees %= 10000000;
-                    }
-                    
-                    if (rupees >= 100000) {
-                        words += numberToWords(Math.floor(rupees / 100000)) + ' Lakh ';
-                        rupees %= 100000;
-                    }
-                    
-                    if (rupees >= 1000) {
-                        words += numberToWords(Math.floor(rupees / 1000)) + ' Thousand ';
-                        rupees %= 1000;
-                    }
-                    
-                    if (rupees >= 100) {
-                        words += numberToWords(Math.floor(rupees / 100)) + ' Hundred ';
-                        rupees %= 100;
-                    }
-                    
-                    if (rupees > 0) {
-                        if (words !== '') words += 'and ';
-                        
-                        if (rupees < 20) {
-                            words += ones[rupees];
-                        } else {
-                            words += tens[Math.floor(rupees / 10)];
-                            if (rupees % 10 > 0) {
-                                words += ' ' + ones[rupees % 10];
-                            }
-                        }
-                    }
-                    
-                    words += ' Rupees';
-                }
-                
-                // Convert paisa
-                if (paisa > 0) {
-                    if (words !== '') words += ' and ';
-                    
-                    if (paisa < 20) {
-                        words += ones[paisa] + ' Paisa';
-                    } else {
-                        words += tens[Math.floor(paisa / 10)];
-                        if (paisa % 10 > 0) {
-                            words += ' ' + ones[paisa % 10] + ' Paisa';
-                        }
-                    }
-                }
-                
-                return words + ' Only';
-            }
+    // Round to 2 decimals (avoid floating errors)
+    number = Math.round(number * 100) / 100;
+
+    let rupees = Math.floor(number);
+    let paisa = Math.round((number - rupees) * 100);
+
+    // Handle case: if paisa rounds to 100, add to rupees
+    if (paisa === 100) {
+        rupees += 1;
+        paisa = 0;
+    }
+
+    const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten',
+        'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen',
+        'Eighteen', 'Nineteen'];
+    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+    function twoDigitToWords(n) {
+        if (n < 20) return ones[n];
+        let t = Math.floor(n / 10);
+        let o = n % 10;
+        return tens[t] + (o ? ' ' + ones[o] : '');
+    }
+
+    function threeDigitToWords(n) {
+        let str = '';
+        if (n >= 100) {
+            str += ones[Math.floor(n / 100)] + ' Hundred';
+            let rem = n % 100;
+            if (rem) str += ' ' + twoDigitToWords(rem);
+        } else if (n > 0) {
+            str += twoDigitToWords(n);
+        }
+        return str;
+    }
+
+    function convertNumberToWords(n) {
+        if (n === 0) return 'Zero';
+        let parts = [];
+
+        const crore = Math.floor(n / 10000000);
+        n %= 10000000;
+        const lakh = Math.floor(n / 100000);
+        n %= 100000;
+        const thousand = Math.floor(n / 1000);
+        n %= 1000;
+        const hundreds = n;
+
+        if (crore) parts.push(convertNumberToWords(crore) + ' Crore');
+        if (lakh) parts.push(convertNumberToWords(lakh) + ' Lakh');
+        if (thousand) parts.push(threeDigitToWords(thousand) + ' Thousand');
+        if (hundreds) parts.push(threeDigitToWords(hundreds));
+
+        return parts.join(' ').trim();
+    }
+
+    let words = '';
+
+    if (rupees === 0 && paisa === 0) {
+        return 'ZERO RUPEES ONLY';
+    }
+
+    if (rupees > 0) {
+        words += convertNumberToWords(rupees) + ' Rupees';
+    } else {
+        words += 'Zero Rupees';
+    }
+
+    if (paisa > 0) {
+        let paisaWords = paisa < 20 ? ones[paisa] : tens[Math.floor(paisa / 10)] + (paisa % 10 ? ' ' + ones[paisa % 10] : '');
+        words += ' and ' + paisaWords + ' Paisa';
+    }
+
+    return (words + ' Only').toUpperCase();
+}
+
             
-            // Update preview when Generate Invoice button is clicked
-            document.getElementById('generate-invoice').addEventListener('click', function() {
+            // Core function to update invoice preview from form values
+            function updateInvoice() {
                 // Update invoice title
                 document.getElementById('preview-invoice-title').textContent = document.getElementById('invoiceTitle').value;
                 
@@ -747,8 +990,16 @@
                 document.getElementById('preview-invoice-date').textContent = formatDate(document.getElementById('invoiceDate').value);
                 document.getElementById('preview-delivery-note').textContent = document.getElementById('deliveryNote').value;
                 document.getElementById('preview-payment-terms').textContent = document.getElementById('paymentTerms').value;
+                document.getElementById('preview-reference-no-date').textContent = document.getElementById('referenceNoDate').value;
+                document.getElementById('preview-other-references').textContent = document.getElementById('otherReferences').value || '-';
+                document.getElementById('preview-buyer-order-no').textContent = document.getElementById('buyerOrderNo').value;
+                document.getElementById('preview-buyer-order-date').textContent = formatDate(document.getElementById('buyerOrderDate').value);
+                document.getElementById('preview-dispatch-doc-no').textContent = document.getElementById('dispatchDocNo').value;
                 document.getElementById('preview-delivery-note-date').textContent = formatDate(document.getElementById('deliveryNoteDate').value);
                 document.getElementById('preview-dispatched-through').textContent = document.getElementById('dispatchedThrough').value;
+                document.getElementById('preview-destination').textContent = document.getElementById('destination').value;
+                document.getElementById('preview-bill-of-lading').textContent = document.getElementById('billOfLading').value || '-';
+                document.getElementById('preview-motor-vehicle-no').textContent = document.getElementById('motorVehicleNo').value || '-';
                 
                 // Process products
                 const productItems = document.querySelectorAll('.product-item');
@@ -848,6 +1099,17 @@
                 // Update amount in words
                 document.getElementById('preview-amount-words').textContent = `INR ${numberToWords(total)}`;
                 document.getElementById('preview-tax-words').textContent = `INR ${numberToWords(taxTotal)}`;
+            }
+
+            // Update on button click as well
+            document.getElementById('generate-invoice').addEventListener('click', updateInvoice);
+
+            // Live update on any form input change
+            const formContainer = document.querySelector('.input-form');
+            formContainer.addEventListener('input', function(e) {
+                if (e.target.matches('input, textarea, select')) {
+                    updateInvoice();
+                }
             });
             
             // Add new product row
@@ -869,13 +1131,17 @@
                 // Add event listener to remove button
                 newProduct.querySelector('.remove-product').addEventListener('click', function() {
                     productsContainer.removeChild(newProduct);
+                    updateInvoice();
                 });
+                // Update after adding new row so totals and words reflect defaults
+                updateInvoice();
             });
             
             // Add event listeners to existing remove buttons
             document.querySelectorAll('.remove-product').forEach(button => {
                 button.addEventListener('click', function() {
                     this.parentElement.remove();
+                    updateInvoice();
                 });
             });
             
