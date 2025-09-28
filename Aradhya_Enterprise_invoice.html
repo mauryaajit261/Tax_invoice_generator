@@ -67,30 +67,102 @@
         }
         
         .app-container {
+            display: block;
+            width: 100%;
+        }
+        
+        /* Tab Navigation */
+        .tab-navigation {
             display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: 20px;
+            background: #f8fafc;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--light-text);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .tab-button.active {
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            color: white;
+        }
+        
+        .tab-button:hover:not(.active) {
+            background: #e2e8f0;
+            color: var(--dark-text);
         }
         
         .input-form {
-            flex: 1;
-            min-width: 300px;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            animation: slideInLeft 0.8s ease-out;
-        }
-        
-        .invoice-preview {
-            flex: 2;
-            min-width: 600px;
+            display: none;
             background: white;
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            overflow: auto;
-            animation: slideInRight 0.8s ease-out;
+            animation: fadeIn 0.5s ease-out;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .input-form.active {
+            display: block;
+        }
+        
+        /* Form Grid Layout */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .form-section {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-blue);
+        }
+        
+        .invoice-preview {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-out;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .invoice-preview.active {
+            display: block;
+        }
+        
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .preview-actions {
+            display: flex;
+            gap: 15px;
         }
         
         .section-title {
@@ -102,6 +174,12 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+        
+        .form-section .section-title {
+            margin-top: 0;
+            font-size: 1.2rem;
+            border-bottom: 2px solid var(--primary-blue);
         }
         
         .section-title i {
@@ -190,10 +268,28 @@
         
         .download-btn {
             background: linear-gradient(to right, #10b981, #34d399);
-            display: block;
-            width: 100%;
-            text-align: center;
-            margin-top: 25px;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(to right, var(--primary-blue), var(--light-blue));
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border-color);
         }
         
         .download-btn:hover {
@@ -317,10 +413,30 @@
             justify-content: space-between;
             gap: 30px;
             margin-bottom: 20px;
+            align-items: flex-start;
+            width: 100%;
         }
         
         .preview-column {
             flex: 1;
+            min-width: 0; /* Allow flex items to shrink */
+            width: 48%;
+            box-sizing: border-box;
+        }
+        
+        .preview-column .section-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--light-yellow);
+            padding-bottom: 8px;
+        }
+        
+        /* Better styling for consignee section */
+        .preview-column div {
+            line-height: 1.5;
+            font-size: 14px;
         }
         
         /* Animations */
@@ -417,13 +533,38 @@
             .preview-two-columns {
                 display: flex !important;
                 justify-content: space-between !important;
-                gap: 15px !important;
-                margin-bottom: 8px !important;
+                gap: 20px !important;
+                margin-bottom: 10px !important;
                 page-break-inside: avoid;
+                align-items: flex-start !important;
+                width: 100% !important;
             }
             
             .preview-column {
                 flex: 1 !important;
+                min-width: 0 !important;
+                width: 48% !important;
+                max-width: 48% !important;
+                box-sizing: border-box !important;
+                vertical-align: top !important;
+            }
+            
+            .preview-column:first-child {
+                padding-right: 10px !important;
+            }
+            
+            .preview-column:last-child {
+                padding-left: 10px !important;
+            }
+            
+            .preview-column .section-title {
+                margin-top: 0 !important;
+                margin-bottom: 8px !important;
+                font-size: 12px !important;
+                font-weight: bold !important;
+                color: #2563eb !important;
+                border-bottom: 1px solid #f59e0b !important;
+                padding-bottom: 3px !important;
             }
             
             .two-columns {
@@ -455,11 +596,34 @@
             }
             
             .summary-table {
-                font-size: 9px !important;
+                font-size: 10px !important;
+                width: 100% !important;
+                table-layout: fixed !important;
+                border-collapse: collapse !important;
             }
             
             .summary-table td {
-                padding: 2px 3px !important;
+                padding: 3px 4px !important;
+                word-wrap: break-word !important;
+                border: none !important;
+                vertical-align: top !important;
+                line-height: 1.2 !important;
+            }
+            
+            .summary-table .label {
+                width: 55% !important;
+                font-weight: normal !important;
+                text-align: left !important;
+            }
+            
+            /* Specific styling for consignee section in print */
+            .preview-column div {
+                font-size: 10px !important;
+                line-height: 1.3 !important;
+            }
+            
+            .preview-column strong {
+                font-weight: bold !important;
             }
             
             .label {
@@ -502,6 +666,22 @@
                 font-size: 9px !important;
             }
             
+            /* Force side-by-side layout */
+            @media print {
+                .preview-two-columns {
+                    display: table !important;
+                    width: 100% !important;
+                    table-layout: fixed !important;
+                }
+                
+                .preview-column {
+                    display: table-cell !important;
+                    width: 50% !important;
+                    vertical-align: top !important;
+                    padding: 0 10px !important;
+                }
+            }
+            
             /* Reduce gaps in product table */
             #preview-products tbody tr {
                 line-height: 1.1 !important;
@@ -509,12 +689,17 @@
         }
         
         @media (max-width: 768px) {
-            .app-container {
-                flex-direction: column;
+            .form-grid {
+                grid-template-columns: 1fr;
             }
             
-            .invoice-preview, .input-form {
-                min-width: 100%;
+            .tab-button {
+                font-size: 16px;
+                padding: 15px;
+            }
+            
+            .preview-actions {
+                flex-direction: column;
             }
             
             .two-columns, .preview-two-columns {
@@ -535,17 +720,30 @@
         </header>
         
         <div class="app-container">
-            <div class="input-form">
-                <div class="section-title"><i class="fas fa-file-invoice"></i> Invoice Details</div>
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <button class="tab-button active" id="edit-tab">
+                    <i class="fas fa-edit"></i> Edit Invoice
+                </button>
+                <button class="tab-button" id="preview-tab">
+                    <i class="fas fa-eye"></i> Preview Invoice
+                </button>
+            </div>
+            
+            <!-- Edit Form -->
+            <div class="input-form active" id="edit-section">
+                <div class="form-grid">
+                    <div class="form-section">
+                        <div class="section-title"><i class="fas fa-file-invoice"></i> Invoice Details</div>
                 
                 <div class="form-group">
                     <label for="invoiceTitle"><i class="fas fa-heading"></i> Invoice Title Text</label>
-                    <input type="text" id="invoiceTitle" value="(ORIGINAL FOR RECIPIENT)">
+                    <input type="text" id="invoiceTitle" value="(ORIGINAL FOR RECIPIENT)" placeholder="Enter invoice title (e.g., ORIGINAL FOR RECIPIENT)">
                 </div>
                 
                 <div class="form-group">
                     <label for="invoiceNumber"><i class="fas fa-hashtag"></i> Invoice Number</label>
-                    <input type="text" id="invoiceNumber" value="AE/004/25-26">
+                    <input type="text" id="invoiceNumber" value="AE/004/25-26" placeholder="Enter invoice number (e.g., AE/004/25-26)">
                 </div>
                 
                 <div class="form-group">
@@ -555,17 +753,17 @@
                 
                 <div class="form-group">
                     <label for="deliveryNote"><i class="fas fa-truck-loading"></i> Delivery Note</label>
-                    <input type="text" id="deliveryNote" value="AE/005/25-26">
+                    <input type="text" id="deliveryNote" value="AE/005/25-26" placeholder="Enter delivery note number">
                 </div>
                 
                 <div class="form-group">
                     <label for="paymentTerms"><i class="fas fa-money-bill-wave"></i> Mode/Terms of Payment</label>
-                    <input type="text" id="paymentTerms" value="ADVANCE">
+                    <input type="text" id="paymentTerms" value="ADVANCE" placeholder="Enter payment terms (e.g., ADVANCE, NET 30, COD)">
                 </div>
                 
                 <div class="form-group">
                     <label for="referenceNoDate"><i class="fas fa-file-alt"></i> Reference No. & Date</label>
-                    <input type="text" id="referenceNoDate" value="SI/101/2025-26">
+                    <input type="text" id="referenceNoDate" value="SI/101/2025-26" placeholder="Enter reference number and date">
                 </div>
                 
                 <div class="form-group">
@@ -575,7 +773,7 @@
                 
                 <div class="form-group">
                     <label for="buyerOrderNo"><i class="fas fa-shopping-cart"></i> Buyer's Order No.</label>
-                    <input type="text" id="buyerOrderNo" value="SI/101/2025-26">
+                    <input type="text" id="buyerOrderNo" value="SI/101/2025-26" placeholder="Enter buyer's order number">
                 </div>
                 
                 <div class="form-group">
@@ -585,7 +783,7 @@
                 
                 <div class="form-group">
                     <label for="dispatchDocNo"><i class="fas fa-file-export"></i> Dispatch Doc No.</label>
-                    <input type="text" id="dispatchDocNo" value="005">
+                    <input type="text" id="dispatchDocNo" value="005" placeholder="Enter dispatch document number">
                 </div>
                 
                 <div class="form-group">
@@ -595,12 +793,12 @@
                 
                 <div class="form-group">
                     <label for="dispatchedThrough"><i class="fas fa-shipping-fast"></i> Dispatched Through</label>
-                    <input type="text" id="dispatchedThrough" value="DAMAN">
+                    <input type="text" id="dispatchedThrough" value="DAMAN" placeholder="Enter dispatch method or location">
                 </div>
                 
                 <div class="form-group">
                     <label for="destination"><i class="fas fa-map-marker-alt"></i> Destination</label>
-                    <input type="text" id="destination" value="SILVASSA">
+                    <input type="text" id="destination" value="SILVASSA" placeholder="Enter destination city/location">
                 </div>
                 
                 <div class="form-group">
@@ -613,51 +811,68 @@
                     <input type="text" id="motorVehicleNo" value="" placeholder="(Optional)">
                 </div>
                 
-                <div class="section-title"><i class="fas fa-building"></i> Consignee Details</div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <div class="section-title"><i class="fas fa-building"></i> Consignee Details</div>
                 
                 <div class="form-group">
                     <label for="consigneeName"><i class="fas fa-signature"></i> Consignee Name</label>
-                    <input type="text" id="consigneeName" value="Western Refrigerator Pvt. Ltd.">
+                    <input type="text" id="consigneeName" value="Western Refrigerator Pvt. Ltd." placeholder="Enter customer/consignee company name">
                 </div>
                 
                 <div class="form-group">
                     <label for="consigneeAddress"><i class="fas fa-map-marker-alt"></i> Address</label>
-                    <textarea id="consigneeAddress" rows="3">New Survey No. 726,732,747,748,752,635 Tadgam\nUmbergaon, Dist. Valsad\nGujarat - 396135</textarea>
+                    <textarea id="consigneeAddress" rows="3" placeholder="Enter complete address with city, state, and pincode">New Survey No. 726,732,747,748,752,635 Tadgam\nUmbergaon, Dist. Valsad\nGujarat - 396135</textarea>
                 </div>
                 
                 <div class="form-group">
                     <label for="consigneeGST"><i class="fas fa-id-card"></i> GSTIN/UIN</label>
-                    <input type="text" id="consigneeGST" value="24AAACW0012H1Z0">
+                    <input type="text" id="consigneeGST" value="24AAACW0012H1Z0" placeholder="Enter 15-digit GST number (e.g., 24AAACW0012H1Z0)">
                 </div>
                 
                 <div class="form-group">
                     <label for="consigneeState"><i class="fas fa-globe"></i> State Name & Code</label>
-                    <input type="text" id="consigneeState" value="Gujarat, Code: 24">
+                    <input type="text" id="consigneeState" value="Gujarat, Code: 24" placeholder="Enter state name and code (e.g., Gujarat, Code: 24)">
                 </div>
                 
-                <div class="section-title"><i class="fas fa-boxes"></i> Products</div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <div class="section-title"><i class="fas fa-boxes"></i> Products</div>
                 
                 <div id="products-container">
                     <div class="product-item">
-                        <input type="text" placeholder="Description" value="PC CONTROLLER CARD IR MAKE AIR DRYER" class="product-desc">
-                        <input type="text" placeholder="HSN/SAC" value="84212300" class="product-hsn" style="width: 90px;">
+                        <input type="text" placeholder="Enter product name/description" value="PC CONTROLLER CARD IR MAKE AIR DRYER" class="product-desc">
+                        <input type="text" placeholder="HSN/SAC Code" value="84212300" class="product-hsn" style="width: 90px;">
                         <input type="number" placeholder="GST %" value="18" class="product-gst" style="width: 70px;" min="0" max="28">
-                        <input type="number" placeholder="Qty" value="1" class="product-qty" style="width: 70px;" min="1">
-                        <input type="text" placeholder="Unit" value="NOS" class="product-unit" style="width: 80px;">
-                        
-                        <input type="number" placeholder="Rate" value="20000" class="product-rate" style="width: 110px;" min="0" step="0.01">
+                        <input type="number" placeholder="Quantity" value="1" class="product-qty" style="width: 70px;" min="1">
+                        <input type="text" placeholder="Unit (NOS/KG/PCS)" value="NOS" class="product-unit" style="width: 80px;">
+                        <input type="number" placeholder="Rate per unit" value="20000" class="product-rate" style="width: 110px;" min="0" step="0.01">
+                        <input type="number" placeholder="Enter discount %" value="0" class="product-discount" style="width: 90px;" min="0" max="100" step="0.01">
                         <button class="remove-product"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
                 
-                <button class="add-product-btn" id="add-product"><i class="fas fa-plus-circle"></i> Add Product</button>
+                    <button class="add-product-btn" id="add-product"><i class="fas fa-plus-circle"></i> Add Product</button>
+                </div>
                 
-                <button id="generate-invoice"><i class="fas fa-sync-alt"></i> Generate Invoice</button>
-                <button class="download-btn" id="download-pdf"><i class="fas fa-file-download"></i> Download as PDF</button>
+                <div class="form-actions">
+                    <button class="generate-btn" id="generate-invoice"><i class="fas fa-sync-alt"></i> Generate Invoice</button>
+                    <button class="download-btn" id="switch-to-preview"><i class="fas fa-eye"></i> Preview Invoice</button>
+                </div>
             </div>
             
-            <div class="invoice-preview">
-                <h2 class="section-title"><i class="fas fa-eye"></i> Invoice Preview</h2>
+            <!-- Preview Section -->
+            <div class="invoice-preview" id="preview-section">
+                <div class="preview-header">
+                    <h2 class="section-title"><i class="fas fa-file-invoice-dollar"></i> Invoice Preview</h2>
+                    <div class="preview-actions">
+                        <button class="download-btn" id="download-pdf"><i class="fas fa-file-download"></i> Download PDF</button>
+                        <button class="generate-btn" id="back-to-edit"><i class="fas fa-edit"></i> Back to Edit</button>
+                    </div>
+                </div>
                 <div class="invoice-container" id="invoice">
                     <div class="invoice-header">
                         <div class="invoice-title">TAX INVOICE</div>
@@ -678,70 +893,72 @@
                     <div class="preview-two-columns">
                         <div class="preview-column">
                             <div class="section-title">Consignee (Ship to)</div>
-                            <strong id="preview-consignee-name">Western Refrigerator Pvt. Ltd.</strong><br>
-                            <span id="preview-consignee-address">New Survey No. 726,732,747,748,752,635 Tadgam<br>Umbergaon, Dist. Valsad<br>Gujarat - 396135</span><br>
-                            GSTIN/UIN: <span id="preview-consignee-gst">24AAACW0012H1Z0</span><br>
-                            State Name: <span id="preview-consignee-state">Gujarat, Code: 24</span>
+                            <div class="consignee-info">
+                                <strong id="preview-consignee-name">Western Refrigerator Pvt. Ltd.</strong><br>
+                                <span id="preview-consignee-address">New Survey No. 726,732,747,748,752,635 Tadgam<br>Umbergaon, Dist. Valsad<br>Gujarat - 396135</span><br>
+                                <strong>GSTIN/UIN:</strong> <span id="preview-consignee-gst">24AAACW0012H1Z0</span><br>
+                                <strong>State Name:</strong> <span id="preview-consignee-state">Gujarat, Code: 24</span>
+                            </div>
                         </div>
                         
                         <div class="preview-column">
                             <div class="section-title">Invoice Details</div>
-                            <table class="summary-table">
+                            <table class="summary-table" style="border-collapse: collapse; width: 100%;">
                                 <tr>
-                                    <td class="label">Invoice No:</td>
-                                    <td id="preview-invoice-number">AE/004/25-26</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Invoice No:</td>
+                                    <td id="preview-invoice-number" style="border: none; vertical-align: top;">AE/004/25-26</td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Dated:</td>
-                                    <td id="preview-invoice-date">21-Sep-25</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Dated:</td>
+                                    <td id="preview-invoice-date" style="border: none; vertical-align: top;">21-Sep-25</td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Delivery Note:</td>
-                                    <td id="preview-delivery-note">AE/005/25-26</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Delivery Note:</td>
+                                    <td id="preview-delivery-note" style="border: none; vertical-align: top;">AE/005/25-26</td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Mode/Terms of Payment:</td>
-                                    <td id="preview-payment-terms">ADVANCE</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Mode/Terms of Payment:</td>
+                                    <td id="preview-payment-terms" style="border: none; vertical-align: top;">ADVANCE</td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Reference No. & Date:</td>
-                                    <td id="preview-reference-no-date">SI/101/2025-26</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Reference No. & Date:</td>
+                                    <td id="preview-reference-no-date" style="border: none; vertical-align: top;">SI/101/2025-26</td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Other References:</td>
-                                    <td id="preview-other-references">-</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Other References:</td>
+                                    <td id="preview-other-references" style="border: none; vertical-align: top;">-</td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Buyer's Order No:</td>
-                                    <td id="preview-buyer-order-no">SI/101/2025-26</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Buyer's Order No:</td>
+                                    <td id="preview-buyer-order-no" style="border: none; vertical-align: top;">SI/101/2025-26</td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Buyer's Order Date:</td>
-                                    <td id="preview-buyer-order-date">21-Sep-25</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Buyer's Order Date:</td>
+                                    <td id="preview-buyer-order-date" style="border: none; vertical-align: top;">21-Sep-25</td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Dispatch Doc No:</td>
-                                    <td id="preview-dispatch-doc-no">005</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Dispatch Doc No:</td>
+                                    <td id="preview-dispatch-doc-no" style="border: none; vertical-align: top;">005</td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Delivery Note Date:</td>
-                                    <td id="preview-delivery-note-date">-</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Delivery Note Date:</td>
+                                    <td id="preview-delivery-note-date" style="border: none; vertical-align: top;">-</td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Dispatched through:</td>
-                                    <td id="preview-dispatched-through">DAMAN</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Dispatched through:</td>
+                                    <td id="preview-dispatched-through" style="border: none; vertical-align: top;">DAMAN</td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Destination:</td>
-                                    <td id="preview-destination">SILVASSA</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Destination:</td>
+                                    <td id="preview-destination" style="border: none; vertical-align: top;">SILVASSA</td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Bill of Lading/LR-RR No:</td>
-                                    <td id="preview-bill-of-lading">-</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Bill of Lading/LR-RR No:</td>
+                                    <td id="preview-bill-of-lading" style="border: none; vertical-align: top;">-</td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Motor Vehicle No:</td>
-                                    <td id="preview-motor-vehicle-no">-</td>
+                                    <td class="label" style="border: none; vertical-align: top;">Motor Vehicle No:</td>
+                                    <td id="preview-motor-vehicle-no" style="border: none; vertical-align: top;">-</td>
                                 </tr>
                             </table>
                         </div>
@@ -759,6 +976,7 @@
                                     <th>Quantity</th>
                                     <th>Rate</th>
                                     <th>Per</th>
+                                    <th>Discount</th>
                                     <th>Amount</th>
                                 </tr>
                             </thead>
@@ -771,20 +989,21 @@
                                     <td>1</td>
                                     <td>20,000.00</td>
                                     <td>NOS</td>
+                                    <td>0%</td>
                                     <td>20,000.00</td>
                                 </tr>
                             </tbody>
                             <tfoot id="preview-products-total">
                                 <tr>
-                                    <td colspan="7" style="text-align: right;">Subtotal:</td>
+                                    <td colspan="8" style="text-align: right;">Subtotal:</td>
                                     <td>20,000.00</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7" style="text-align: right;">IGST @18%:</td>
+                                    <td colspan="8" style="text-align: right;">IGST @18%:</td>
                                     <td>3,600.00</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7" style="text-align: right; font-weight: bold;">Total:</td>
+                                    <td colspan="8" style="text-align: right; font-weight: bold;">Total:</td>
                                     <td style="font-weight: bold;">23,600.00</td>
                                 </tr>
                             </tfoot>
@@ -1023,7 +1242,12 @@
                     const qty = parseFloat(item.querySelector('.product-qty').value) || 0;
                     const unit = item.querySelector('.product-unit').value;
                     const rate = parseFloat(item.querySelector('.product-rate').value) || 0;
-                    const amount = qty * rate;
+                    const discount = parseFloat(item.querySelector('.product-discount').value) || 0;
+                    
+                    // Calculate amount with discount
+                    const grossAmount = qty * rate;
+                    const discountAmount = grossAmount * (discount / 100);
+                    const amount = grossAmount - discountAmount;
                     
                     subtotal += amount;
                     
@@ -1048,6 +1272,7 @@
                         <td>${qty}</td>
                         <td>${formatCurrency(rate)}</td>
                         <td>${unit}</td>
+                        <td>${discount}%</td>
                         <td>${formatCurrency(amount)}</td>
                     `;
                     productTable.appendChild(row);
@@ -1073,15 +1298,15 @@
                 
                 productTotalSection.innerHTML = `
                     <tr>
-                        <td colspan="7" style="text-align: right;">Subtotal:</td>
+                        <td colspan="8" style="text-align: right;">Subtotal:</td>
                         <td>${formatCurrency(subtotal)}</td>
                     </tr>
                     <tr>
-                        <td colspan="7" style="text-align: right;">IGST @${Object.values(taxGroups).map(g => g.gstRate + '%').join(' + ')}:</td>
+                        <td colspan="8" style="text-align: right;">IGST @${Object.values(taxGroups).map(g => g.gstRate + '%').join(' + ')}:</td>
                         <td>${formatCurrency(taxTotal)}</td>
                     </tr>
                     <tr>
-                        <td colspan="7" style="text-align: right; font-weight: bold;">Total:</td>
+                        <td colspan="8" style="text-align: right; font-weight: bold;">Total:</td>
                         <td style="font-weight: bold;">${formatCurrency(total)}</td>
                     </tr>
                 `;
@@ -1118,12 +1343,13 @@
                 const newProduct = document.createElement('div');
                 newProduct.className = 'product-item';
                 newProduct.innerHTML = `
-                    <input type="text" placeholder="Description" class="product-desc">
-                    <input type="text" placeholder="HSN/SAC" class="product-hsn" style="width: 90px;">
+                    <input type="text" placeholder="Enter product name/description" class="product-desc">
+                    <input type="text" placeholder="HSN/SAC Code" class="product-hsn" style="width: 90px;">
                     <input type="number" placeholder="GST %" class="product-gst" style="width: 70px;" min="0" max="28" value="18">
-                    <input type="number" placeholder="Qty" class="product-qty" style="width: 70px;" min="1" value="1">
-                    <input type="text" placeholder="Unit" class="product-unit" style="width: 80px;" value="NOS">
-                    <input type="number" placeholder="Rate" class="product-rate" style="width: 110px;" min="0" step="0.01" value="0">
+                    <input type="number" placeholder="Quantity" class="product-qty" style="width: 70px;" min="1" value="1">
+                    <input type="text" placeholder="Unit (NOS/KG/PCS)" class="product-unit" style="width: 80px;" value="NOS">
+                    <input type="number" placeholder="Rate per unit" class="product-rate" style="width: 110px;" min="0" step="0.01" value="0">
+                    <input type="number" placeholder="Enter discount %" class="product-discount" style="width: 90px;" min="0" max="100" step="0.01" value="0">
                     <button class="remove-product"><i class="fas fa-times"></i></button>
                 `;
                 productsContainer.appendChild(newProduct);
@@ -1150,8 +1376,41 @@
                 window.print();
             });
             
+            // Tab switching functionality
+            document.getElementById('edit-tab').addEventListener('click', function() {
+                showEditSection();
+            });
+            
+            document.getElementById('preview-tab').addEventListener('click', function() {
+                updateInvoice();
+                showPreviewSection();
+            });
+            
+            document.getElementById('switch-to-preview').addEventListener('click', function() {
+                updateInvoice();
+                showPreviewSection();
+            });
+            
+            document.getElementById('back-to-edit').addEventListener('click', function() {
+                showEditSection();
+            });
+            
+            function showEditSection() {
+                document.getElementById('edit-section').classList.add('active');
+                document.getElementById('preview-section').classList.remove('active');
+                document.getElementById('edit-tab').classList.add('active');
+                document.getElementById('preview-tab').classList.remove('active');
+            }
+            
+            function showPreviewSection() {
+                document.getElementById('edit-section').classList.remove('active');
+                document.getElementById('preview-section').classList.add('active');
+                document.getElementById('edit-tab').classList.remove('active');
+                document.getElementById('preview-tab').classList.add('active');
+            }
+            
             // Generate initial invoice
-            document.getElementById('generate-invoice').click();
+            updateInvoice();
         });
     </script>
 </body>
